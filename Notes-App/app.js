@@ -2,7 +2,9 @@
 // const getNotes = require('./notes')
 const chalk = require('chalk')
 
-console.log(chalk.green('Success!'))
+console.log(chalk.green.inverse.bold('Green!'))
+console.log(chalk.red.inverse.bold('Red!'))
+console.log(chalk.blue.inverse.bold('Blue1'))
 
 
 /*
