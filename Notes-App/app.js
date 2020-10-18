@@ -1,42 +1,73 @@
-// const validator = require('validator')
-// const getNotes = require('./notes')
 const chalk = require('chalk')
+const yargs = require('yargs')
+const notes = require('./notes')
 
-console.log(chalk.green.inverse.bold('Green!'))
-console.log(chalk.red.inverse.bold('Red!'))
-console.log(chalk.blue.inverse.bold('Blue1'))
+// Customize yargs version
+yargs.version('1.1.0')
 
+// Add Command
+yargs.command({
+  command: 'add',
+  describe: 'Add a new note',
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string'
+    },
+    body: {
+      describe: 'Note body',
+      demandOption: true,
+      type: 'string'
+    }
+  },
+  handler(argv) {
+    notes.addNote(argv.title, argv.body)
+  }
+})
 
-/*
-const msg = getNotes()
-console.log(msg)
+// Remove Command
+yargs.command({
+  command: 'remove',
+  describe: 'Remove an existing note',
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string'
+    }
+  },
+  handler(argv) {
+    notes.removeNote(argv.title)
+  }
+})
 
-console.log(validator.isEmail('blake@example.com'))
-console.log(validator.isEmail('example.com'))
+//Read Command
+yargs.command({
+  command: 'read',
+  describe: 'Reading an existing note',
+  builder: {
+    title: {
+      describe: 'Note title',
+      demandOption: true,
+      type: 'string'
+    }
+  },
+  handler(argv) {
+    notes.readNote(argv.title)
+  }
+})
 
-console.log(validator.isURL('https://google.com'))
-console.log(validator.isURL('https:/website'))
-*/
+// List Command
+yargs.command({
+  command: 'list',
+  describe: 'Listing existing notes',
+  handler() {
+    notes.listNotes()
+  }
+})
 
+// add, remove, read, list
 
-
-// const add = require('./utils')
-
-// const sum = add(4, -2)
-
-// console.log(sum)
-
-/*
- Challege: Define and use a function in a new file
-
- 1. Create a new file called notes.js
- 2. Create getNotes function that returns "Your notes..."
- 3. Export getNotes function
- 4. From app.js, load in and call the function printing message to console
-*/
-
-// const getNotes = require('./notes')
-
-// const msg = getNotes()
-
-// console.log(msg)
+yargs.parse()
+// console.log(yargs.argv)
