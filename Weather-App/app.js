@@ -9,19 +9,19 @@ if (!address) {
 } else {
 // Geocoding (Forward Geocoding)
 // Address -> Lat/Long -> Weather
-geocode(address, (error, data) => {
+geocode(address, (error, {lat, long, location} = {}) => {
   if (error) {
     return console.log(chalk.red.bold(error))
   }
 
   // Geocoding (Forward Geocoding)
   // Address -> Lat/Long -> Weather
-  forecast(data.lat, data.long, (error, forecastData) => {
+  forecast(lat, long, (error, forecastData) => {
     if (error) {
       return console.log(chalk.red.bold(error))
     }
 
-    console.log(data.location)
+    console.log(location)
     console.log(forecastData)
   })
 })
