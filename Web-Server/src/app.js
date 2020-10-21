@@ -46,14 +46,12 @@ app.get('/help', (req, res) => {
 
 app.get('/weather', (req, res) => {
   if (!req.query.address) {
-    return res.render('404', {
-      title: '404',
-      name: 'Copper Jacob',
-      msg: 'Must provide an address'
+    return res.send({
+      error: 'You must provide an address!'
     })
   }
 
-  geocode(req.query.address, (error, {lat, long, location}) => {
+  geocode(req.query.address, (error, {lat, long, location} = {}) => {
     if (error) {
       return res.send({error})
     }
@@ -63,12 +61,10 @@ app.get('/weather', (req, res) => {
         return res.send({error})
       }
 
-      res.render('index', {
+      res.send({
         forecast: forecastData,
-        location: location,
-        address: req.query.address,
-        title: 'Weather',
-        name: 'Copper Jacob'
+        location,
+        address: req.query.address
       })
     })
   })
